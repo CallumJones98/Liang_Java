@@ -30,6 +30,17 @@ public class Chapter_Three_Challenges {
         rockPaperScissors rock_paper_scissors = new rockPaperScissors();
         rock_paper_scissors.playGame(three_scanner, three_random);
 
+        // Cost of shipping program
+        costOfShipping shipping_cost_program = new costOfShipping();
+        shipping_cost_program.calculateCost(three_scanner);
+
+        // Zellers algorithm
+        zellersAlgorithm zellers_algorithm = new zellersAlgorithm();
+        zellers_algorithm.calculateDay(three_scanner);
+
+        // Circle point program
+        circlePoint circle_program = new circlePoint();
+        circle_program.checkCircle(three_scanner);
     }
 }
 
@@ -289,3 +300,132 @@ class rockPaperScissors{
     }
 }
 
+class costOfShipping{
+
+    static void calculateCost(Scanner three_scanner){
+
+        /*
+        Weight table:
+        c(w) = $2.5 if 0 < w <= 2
+               $4.5 if 2 < w <= 4
+               $7.5 if 4 < w <= 10
+               $10.5 if 10 < 2 <= 20
+               'Cant send' if w > 20
+         */
+
+        double cost;
+        String invalid_entry = "Weight entered is invalid.";
+        String weight_over_limit = "Package is too heavy to send.";
+
+
+        System.out.print("Enter weight of package (kg): ");
+        double weight_input = three_scanner.nextDouble();
+
+        if (weight_input < 0.0){
+            System.out.printf("%s", invalid_entry);
+            return;
+        }
+        else if (weight_input <= 2.0){
+            cost = 2.5;
+        }
+        else if (weight_input <= 4.0){
+            cost = 4.5;
+        }
+        else if (weight_input <= 10.0){
+            cost = 7.5;
+        }
+        else if (weight_input <= 20.0){
+            cost = 10.5;
+        }
+        else{
+            System.out.printf("%s", weight_over_limit);
+            return;
+        }
+
+        System.out.printf("The cost of sending this package is $%.2f", cost);
+
+    }
+}
+
+class zellersAlgorithm{
+
+    static void calculateDay(Scanner three_scanner){
+
+        // Enter year, month (m), day of month (q)
+        /*
+        Zellers Algorithm (h = day of the week):
+
+        j = year / 100
+        k = year % 100
+
+            h = (q + (26(m + 1) / 10) + k + (k/4) + (j/4) + (5j)) % 7
+         */
+
+        System.out.print("\nZellers Algorithm Program:");
+
+        System.out.print("\nEnter year: ");
+        int year_input = three_scanner.nextInt();
+        System.out.print("Enter month (1-12): ");
+        int month_input = three_scanner.nextInt();
+        System.out.print("Enter day (1-31): ");
+        int month_day_input = three_scanner.nextInt();
+
+        if (month_input == 1 || month_input == 2) {
+            month_input += 12;
+            year_input--;
+        }
+
+        int q = month_day_input;
+        int m = month_input;
+        int k = year_input % 100;
+        int j = year_input / 100;
+
+        // Zellers algorithm
+        int h = (q + (26 * (m + 1) / 10) + k + (k / 4) + (j / 4) + (5 * j)) % 7;
+
+        if (h < 0){
+            h += 7;
+        }
+
+        String dayName;
+        switch (h) {
+            case 0: dayName = "Saturday"; break;
+            case 1: dayName = "Sunday"; break;
+            case 2: dayName = "Monday"; break;
+            case 3: dayName = "Tuesday"; break;
+            case 4: dayName = "Wednesday"; break;
+            case 5: dayName = "Thursday"; break;
+            case 6: dayName = "Friday"; break;
+            default: dayName = "Unknown"; break;
+        }
+
+        System.out.printf("Day of the week is %s", dayName);
+
+    }
+}
+
+
+class circlePoint{
+
+    static void checkCircle(Scanner three_scanner){
+
+        // User enters point x, y and program checks to see if point is in circle with radius 10
+        // a point is inside the circle if its distance to (0,0) is >= 10
+        // formula for computing the distance is sqrt((x2 - x1)^2 + (y2 - y1)^2)
+
+        System.out.print("\nCheck to see if point is in the circle:");
+
+        System.out.print("\nEnter point x and point y: ");
+        double x_val = three_scanner.nextDouble();
+        double y_val = three_scanner.nextDouble();
+
+        double circle_distance = Math.sqrt((Math.pow(x_val - 0, 2)) + (Math.pow(y_val - 0, 2)));
+
+        if(circle_distance <= 10){
+            System.out.printf("Point (%.1f %.1f) is in the circle.", x_val, y_val);
+        }
+        else{
+            System.out.printf("Point (%.1f %.1f) is not the circle.", x_val, y_val);
+        }
+    }
+}
