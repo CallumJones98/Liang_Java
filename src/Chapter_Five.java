@@ -18,6 +18,17 @@ public class Chapter_Five {
         sentinelValue sentinel_value_program = new sentinelValue();
         sentinel_value_program.runClass(input);
 
+        // reset input
+        input.nextLine();
+
+        // Do While loop program
+        guessRandomLetter guess_random_letter_program = new guessRandomLetter();
+        guess_random_letter_program.runRandomLetter(input);
+
+        // Palindrome Program
+        checkPalindrome palindrome_program = new checkPalindrome();
+        palindrome_program.runPalindrome(input);
+
     }
 
 }
@@ -102,3 +113,78 @@ class sentinelValue{
         System.out.printf("The total is: %d", total_sum);
     }
 }
+
+class guessRandomLetter{
+
+    public void runRandomLetter(Scanner input){
+
+        System.out.print("\n\nGuess a Random Letter Program!");
+
+        int min_letter = 97; // represent 'a'
+        int max_letter = 122; // represent 'z'
+
+        // Random Char
+        int random_int = (int)(Math.random() * (max_letter - min_letter + 1)) + min_letter;
+        char target_char = (char)(random_int);
+
+        //Guess count
+        int number_of_guesses = 0;
+        char user_guess; // Declare it here so the 'while' condition can see it
+
+        // The loop starts here
+        do {
+            System.out.print("\nEnter a letter (a-z): ");
+            String line = input.nextLine();
+
+            user_guess = line.charAt(0);
+            number_of_guesses++;
+
+            if (user_guess != target_char) {
+                if (user_guess < target_char) {
+                    System.out.println("The letter is later in the alphabet.");
+                } else {
+                    System.out.println("The letter is earlier in the alphabet.");
+                }
+            }
+
+        } while (user_guess != target_char);
+
+        System.out.printf("Well done! You guessed the letter %c in %d guesses!", target_char, number_of_guesses);
+
+    }
+}
+
+class checkPalindrome{
+
+    public void runPalindrome(Scanner input){
+
+        System.out.print("\n\nPalindrome program!");
+
+        System.out.print("\nEnter a string: ");
+        String word = input.nextLine();
+
+        int first_char = 0; // index = 0
+        int last_char = word.length() - 1;
+
+        boolean is_palindrome = true;
+
+        while(first_char < last_char){
+            if (word.charAt(first_char) != word.charAt(last_char)){
+                is_palindrome = false;
+                break;
+            }
+
+            first_char++;
+            last_char--;
+        }
+
+        if(is_palindrome){
+            System.out.printf("\n%s is a palindrome!", word);
+        }
+        else{
+            System.out.printf("\n%s is not a palindrome!", word);
+        }
+    }
+}
+
+
